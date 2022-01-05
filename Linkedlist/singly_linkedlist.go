@@ -1,14 +1,14 @@
-package main
+package Linkedlist
 
 import (
 	"fmt"
 )
 
-// linkedList represents an actual linked list
+// LinkedList represents an actual linked list
 // with its head/current reference.
-type linkedList struct {
-	head, curr *Node
-	len        int
+type LinkedList struct {
+	head *Node
+	len  int
 }
 
 // Node represents a single node in the linked list.
@@ -17,8 +17,8 @@ type Node struct {
 	next *Node
 }
 
-// newNode returns a new node with given data.
-func newNode(data interface{}) *Node {
+// NewNode returns a new node with given data.
+func NewNode(data interface{}) *Node {
 	return &Node{
 		data: data,
 		next: nil,
@@ -26,7 +26,7 @@ func newNode(data interface{}) *Node {
 }
 
 // InsertFirst inserts a node at the beginning of the linked list.
-func (l *linkedList) InsertFirst(node *Node) {
+func (l *LinkedList) InsertFirst(node *Node) {
 	// if there is no node in the list
 	if l.head == nil {
 		l.head = node
@@ -40,21 +40,24 @@ func (l *linkedList) InsertFirst(node *Node) {
 }
 
 // InsertLast inserts a node at the end of the linked list.
-func (l *linkedList) InsertLast(node *Node) {
+func (l *LinkedList) InsertLast(node *Node) {
 	// if there is no node in the list
 	if l.head == nil {
-		l.head, l.curr = node, node
+		l.head = node
 		l.len++
 		return
 	}
-	// insert given node  at the end of the list
-	l.curr.next = node
-	l.curr = l.curr.next
+	// find last node in the list
+	curr := l.head
+	for curr.next != nil {
+		curr = curr.next
+	}
+	curr.next = node
 	l.len++
 }
 
 // DeleteFirst delete a first node from the linked list.
-func (l *linkedList) DeleteFirst() {
+func (l *LinkedList) DeleteFirst() {
 	// if there is no node in the list
 	if l.head == nil {
 		return
@@ -73,7 +76,7 @@ func (l *linkedList) DeleteFirst() {
 }
 
 // DeleteLast delete a last node from the linked list.
-func (l *linkedList) DeleteLast() {
+func (l *LinkedList) DeleteLast() {
 	// if there is no node in the list
 	if l.head == nil {
 		return
@@ -90,12 +93,13 @@ func (l *linkedList) DeleteLast() {
 		l.len--
 		return
 	}
+
 	prv.next = nil
 	l.len--
 }
 
 // DeleteNode delete the first occurrence of a node with given data.
-func (l *linkedList) DeleteNode(key interface{}) {
+func (l *LinkedList) DeleteNode(key interface{}) {
 	// if there is no node in the list
 	if l.head == nil {
 		return
@@ -103,6 +107,7 @@ func (l *linkedList) DeleteNode(key interface{}) {
 	// if head itself holds the key
 	if l.head.data == key {
 		l.DeleteFirst()
+		return
 	}
 	// find prv and next elements to the given data and break the link
 	curr, prv := l.head, l.head
@@ -113,38 +118,18 @@ func (l *linkedList) DeleteNode(key interface{}) {
 		prv = curr
 		curr = curr.next
 	}
+
 	prv.next = curr.next
 	curr.next = nil
 	l.len--
 }
 
 // Traverse iterates over the receiver linked list.
-func (l *linkedList) Traverse() {
+func (l *LinkedList) Traverse() {
 	currNode := l.head
 	for currNode.next != nil {
 		fmt.Printf("%v-->", currNode.data)
 		currNode = currNode.next
 	}
 	fmt.Printf("%v\nTotal Elements: %v\n", currNode.data, l.len)
-}
-
-func main() {
-	numbs := []int{1, 2, 3, 4, 5}
-	numberList := linkedList{}
-	for _, num := range numbs {
-		numberList.InsertLast(newNode(num))
-	}
-	numberList.Traverse()
-	numberList.DeleteFirst()
-	numberList.Traverse()
-	fmt.Println("deleting last")
-	numberList.DeleteLast()
-	numberList.Traverse()
-
-	//multiDataTypeList := linkedList{}
-	//multiDataTypeList.insertAtBeginning(newNode("Hey Buddy!"))
-	//multiDataTypeList.insertAtBeginning(newNode(true))
-	//multiDataTypeList.insertAtBeginning(newNode(23.5))
-	//multiDataTypeList.insertAtBeginning(newNode(numbs))
-	//multiDataTypeList.traverse()
 }
