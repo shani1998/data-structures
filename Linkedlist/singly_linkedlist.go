@@ -4,43 +4,44 @@ import (
 	"fmt"
 )
 
-// LinkedList represents an actual linked list
+// SinglyLinkedList represents an actual linked list
 // with its head/current reference.
-type LinkedList struct {
-	head *Node
+type SinglyLinkedList struct {
+	head *SinglyNode
 	len  int
 }
 
-// Node represents a single node in the linked list.
-type Node struct {
+// SinglyNode represents a single node in the linked list.
+type SinglyNode struct {
 	data interface{}
-	next *Node
+	next *SinglyNode
 }
 
-// NewNode returns a new node with given data.
-func NewNode(data interface{}) *Node {
-	return &Node{
+// NewSinglyNode returns a new node with given data.
+func NewSinglyNode(data interface{}) *SinglyNode {
+	return &SinglyNode{
 		data: data,
 		next: nil,
 	}
 }
 
 // InsertFirst inserts a node at the beginning of the linked list.
-func (l *LinkedList) InsertFirst(node *Node) {
+func (l *SinglyLinkedList) InsertFirst(node *SinglyNode) {
 	// if there is no node in the list
 	if l.head == nil {
 		l.head = node
 		l.len++
 		return
 	}
-	// insert given node  at the beginning of the list
+	// Make next of new node as head
 	node.next = l.head
+	// move the head to point to the new node
 	l.head = node
 	l.len++
 }
 
 // InsertLast inserts a node at the end of the linked list.
-func (l *LinkedList) InsertLast(node *Node) {
+func (l *SinglyLinkedList) InsertLast(node *SinglyNode) {
 	// if there is no node in the list
 	if l.head == nil {
 		l.head = node
@@ -57,7 +58,7 @@ func (l *LinkedList) InsertLast(node *Node) {
 }
 
 // DeleteFirst delete a first node from the linked list.
-func (l *LinkedList) DeleteFirst() {
+func (l *SinglyLinkedList) DeleteFirst() {
 	// if there is no node in the list
 	if l.head == nil {
 		return
@@ -76,7 +77,7 @@ func (l *LinkedList) DeleteFirst() {
 }
 
 // DeleteLast delete a last node from the linked list.
-func (l *LinkedList) DeleteLast() {
+func (l *SinglyLinkedList) DeleteLast() {
 	// if there is no node in the list
 	if l.head == nil {
 		return
@@ -99,7 +100,7 @@ func (l *LinkedList) DeleteLast() {
 }
 
 // DeleteNode delete the first occurrence of a node with given data.
-func (l *LinkedList) DeleteNode(key interface{}) {
+func (l *SinglyLinkedList) DeleteNode(key interface{}) {
 	// if there is no node in the list
 	if l.head == nil {
 		return
@@ -125,7 +126,7 @@ func (l *LinkedList) DeleteNode(key interface{}) {
 }
 
 // Traverse iterates over the receiver linked list.
-func (l *LinkedList) Traverse() {
+func (l *SinglyLinkedList) Traverse() {
 	currNode := l.head
 	for currNode.next != nil {
 		fmt.Printf("%v-->", currNode.data)

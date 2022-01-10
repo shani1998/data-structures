@@ -5,15 +5,15 @@ import (
 	"testing"
 )
 
-func constructList(data []interface{}) *Node {
-	list := LinkedList{}
+func constructList(data []interface{}) *SinglyNode {
+	list := SinglyLinkedList{}
 	for _, num := range data {
-		list.InsertLast(NewNode(num))
+		list.InsertLast(NewSinglyNode(num))
 	}
 	return list.head
 }
 
-func compare(expectedNodes []interface{}, head *Node) (int, interface{}, interface{}, error) {
+func compare(expectedNodes []interface{}, head *SinglyNode) (int, interface{}, interface{}, error) {
 	curr, count := head, 0
 	for curr != nil {
 		if curr.data != expectedNodes[count] {
@@ -27,8 +27,8 @@ func compare(expectedNodes []interface{}, head *Node) (int, interface{}, interfa
 
 func TestLinkedList_DeleteFirst(t *testing.T) {
 	type fields struct {
-		head *Node
-		curr *Node
+		head *SinglyNode
+		curr *SinglyNode
 		len  int
 	}
 	tests := []struct {
@@ -70,7 +70,7 @@ func TestLinkedList_DeleteFirst(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			l := &LinkedList{
+			l := &SinglyLinkedList{
 				head: tt.fields.head,
 				len:  tt.fields.len,
 			}
@@ -88,8 +88,8 @@ func TestLinkedList_DeleteFirst(t *testing.T) {
 
 func TestLinkedList_DeleteLast(t *testing.T) {
 	type fields struct {
-		head *Node
-		curr *Node
+		head *SinglyNode
+		curr *SinglyNode
 		len  int
 	}
 	tests := []struct {
@@ -131,7 +131,7 @@ func TestLinkedList_DeleteLast(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			l := &LinkedList{
+			l := &SinglyLinkedList{
 				head: tt.fields.head,
 				len:  tt.fields.len,
 			}
@@ -149,8 +149,8 @@ func TestLinkedList_DeleteLast(t *testing.T) {
 
 func TestLinkedList_DeleteNode(t *testing.T) {
 	type fields struct {
-		head *Node
-		curr *Node
+		head *SinglyNode
+		curr *SinglyNode
 		len  int
 	}
 
@@ -219,7 +219,7 @@ func TestLinkedList_DeleteNode(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			l := &LinkedList{
+			l := &SinglyLinkedList{
 				head: tt.fields.head,
 				len:  tt.fields.len,
 			}
@@ -237,14 +237,14 @@ func TestLinkedList_DeleteNode(t *testing.T) {
 
 func TestLinkedList_InsertFirst(t *testing.T) {
 	type fields struct {
-		head *Node
-		curr *Node
+		head *SinglyNode
+		curr *SinglyNode
 		len  int
 	}
 	tests := []struct {
 		name          string
 		fields        fields
-		node          *Node
+		node          *SinglyNode
 		expectedNodes []interface{}
 		expectedLen   int
 	}{
@@ -273,7 +273,7 @@ func TestLinkedList_InsertFirst(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			l := &LinkedList{
+			l := &SinglyLinkedList{
 				head: tt.fields.head,
 				len:  tt.fields.len,
 			}
@@ -291,14 +291,14 @@ func TestLinkedList_InsertFirst(t *testing.T) {
 
 func TestLinkedList_InsertLast(t *testing.T) {
 	type fields struct {
-		head *Node
-		curr *Node
+		head *SinglyNode
+		curr *SinglyNode
 		len  int
 	}
 	tests := []struct {
 		name          string
 		fields        fields
-		node          *Node
+		node          *SinglyNode
 		expectedNodes []interface{}
 		expectedLen   int
 	}{
@@ -327,7 +327,7 @@ func TestLinkedList_InsertLast(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			l := &LinkedList{
+			l := &SinglyLinkedList{
 				head: tt.fields.head,
 				len:  tt.fields.len,
 			}
