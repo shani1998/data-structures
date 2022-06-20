@@ -1,4 +1,4 @@
-package Trie
+package main
 
 import (
 	"fmt"
@@ -11,6 +11,8 @@ type Node struct {
 	char rune
 	//store all children  of a node that is from a-z
 	children [26]*Node
+	// indicates that the node is leaf node
+	isEndOfWords bool
 }
 
 // Trie  is our actual tree that will hold all of our nodes
@@ -22,7 +24,7 @@ type Trie struct {
 // NewTrieNode this will be used to initialize a new node with 26 children
 //each child should first be initialized to nil
 func NewTrieNode(ch rune) *Node {
-	node := &Node{char: ch}
+	node := &Node{char: ch, isEndOfWords: false}
 	for i := 0; i < 26; i++ {
 		node.children[i] = nil
 	}
@@ -48,14 +50,33 @@ func (t *Trie) Insert(str string) {
 		}
 		current = current.children[ch-97]
 	}
+	current.isEndOfWords = true
+}
+
+func (t *Trie) Display() {
+	queue := make([]*Node, 0)
+	queue = append(queue, t.root)
+
+	for len(queue) > 0 {
+		current := queue[0]
+		queue = queue[1:]
+		for i, child := range current.children {
+			if current.children[i] != nil {
+				queue = append(queue, child)
+				fmt.Printf("%s, isEndOfWords %v,queue %v\n", string(child.char), child.isEndOfWords, queue)
+			}
+		}
+	}
 }
 
 func main() {
 	trie := &Trie{root: NewTrieNode(0)}
 	trie.Insert("app")
 	trie.Insert("apple")
-	fmt.Printf("%+v", trie.root.children)
-	for v := range trie.root.children {
-		fmt.Printf("%+v", v)
-	}
+	trie.Insert("star")
+	//fmt.Printf("%+v", trie.root.children)
+	//for v := range trie.root.children {
+	//	fmt.Printf("%+v", v)
+	//}
+	trie.Display()
 }

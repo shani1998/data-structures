@@ -1,4 +1,4 @@
-package Trie
+package main
 
 func longestCommonPrefix(strs []string) string {
 	n := len(strs)

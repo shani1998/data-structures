@@ -1,4 +1,4 @@
-package Linkedlist
+package linkedlist
 
 // LinkedList represents an actual doubly linked list
 // with its head reference.
