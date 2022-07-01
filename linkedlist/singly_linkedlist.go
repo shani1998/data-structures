@@ -13,7 +13,7 @@ type SinglyLinkedList struct {
 
 // SinglyNode represents a single node in the linked list.
 type SinglyNode struct {
-	data interface{}
+	data any
 	next *SinglyNode
 }
 
@@ -123,24 +123,6 @@ func (l *SinglyLinkedList) DeleteNode(key interface{}) {
 	prv.next = curr.next
 	curr.next = nil
 	l.len--
-}
-
-// ReverseList reverse the Linked-list and return new head.
-// i/p: 2-->3-->4-->5-->6, o/p: 6-->5-->4-->3-->2
-func (l *SinglyLinkedList) ReverseList() *SinglyNode {
-	// if there is no node in the list
-	if l.head == nil {
-		return nil
-	}
-	var prv *SinglyNode
-	prv, curr := nil, l.head
-	for curr != nil {
-		temp := curr.next
-		curr.next = prv
-		prv = curr
-		curr = temp
-	}
-	return prv
 }
 
 // Traverse iterates over the receiver linked list.
