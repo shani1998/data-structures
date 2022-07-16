@@ -26,14 +26,16 @@ func BubbleSort(arr []int) []int {
 }
 
 /*
-Worst and Average Case Time Complexity: O(N2).
+Worst and Average Case Time Complexity: O(N^2).
 Best Case Time Complexity: O(N). The best case occurs when an array is already sorted.
 Space Complexity: O(1)
 
-Does sorting happens in place in Bubble sort?
-Yes, Bubble sort performs swapping of adjacent pairs without use of any major data structure. Hence Bubble sort algorithm is an in-place algorithm.
+-> Does sorting happens in place in Bubble sort?
+Yes, Bubble sort performs swapping of adjacent pairs without use of any major data structure. Hence, Bubble sort algorithm is an in-place algorithm.
 
-Is Bubble sort algorithm stable?
+-> Is Bubble sort algorithm stable?
 Yes, bubble sort algorithm is stable.
+
+If two objects with equal keys appear in the same order in sorted output as they appear in the input, an unsorted array of elements then the algorithm used for sorting is a stable sort algorithm.
 
 */
