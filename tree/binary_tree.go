@@ -1,8 +1,9 @@
 package tree
 
 import (
-	"github.com/shani1998/data-structures/queue"
 	"sync"
+
+	"github.com/shani1998/data-structures/queue"
 )
 
 // Node a single node that composes the tree
