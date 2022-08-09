@@ -48,4 +48,6 @@ func main() {
 
 	fmt.Println("---DFS Traversal ---")
 	g.DFS()
+	fmt.Println("\n---BFS Traversal ---")
+	g.BFS()
 }
