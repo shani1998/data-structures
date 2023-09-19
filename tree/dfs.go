@@ -25,7 +25,7 @@ func InOrderTraversalIterative(root *Node) {
 	stack.Push(root)
 
 	for len(stack) > 0 {
-		curr := root.left
+		//curr := root.left
 		// TODO
 	}
 

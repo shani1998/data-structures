@@ -8,6 +8,7 @@ type ListNode struct {
 
 /*
 Problem1:
+
 	Given head which is a reference node to a singly-linked list. The value of each node in the linked list is either 0 or 1.
 	The linked list holds the binary representation of a number. Return the decimal value of the number in the linked list.
 */
@@ -45,6 +46,7 @@ func getDecimalValue(head *ListNode) int {
 
 /*
 Problem2:
+
 	Given the head of a singly linked list, return the middle node of the linked list.
 	If there are two middle nodes, return the second middle node.
 */
@@ -61,6 +63,7 @@ func middleNode(head *ListNode) *ListNode {
 
 /*
 Problem3:
+
 	Write a function to delete a node in a singly-linked list. You will not be given access to the head of the list,
 	instead you will be given access to the node to be deleted directly.
 	It is guaranteed that the node to be deleted is not a tail node in the list.
@@ -167,4 +170,45 @@ func DetectCycle(head *ListNode) *ListNode {
 
 	return slow
 
+}
+
+// RemoveNthFromEnd Given the head of a linked list, remove the nth node from the end of the list and return its head.
+// problem link: https://leetcode.com/problems/remove-nth-node-from-end-of-list/description/
+func RemoveNthFromEnd(head *ListNode, n int) *ListNode {
+	totalNodes := getLenOfLinkList(head)
+	desireNodePos := (totalNodes - n) + 1
+
+	if desireNodePos <= 0 {
+		return head
+	}
+
+	curr, prev, currNodePos := head, head, 1
+	for currNodePos != desireNodePos {
+		prev = curr
+		curr = curr.Next
+		currNodePos++
+	}
+
+	// if head node is desire node to be deleted
+	if curr == prev {
+		head = head.Next
+		prev.Next = nil
+		return head
+	}
+
+	prev.Next = curr.Next
+
+	return head
+}
+
+func getLenOfLinkList(head *ListNode) int {
+	if head == nil {
+		return 0
+	}
+	i, temp := 1, head
+	for temp.Next != nil {
+		i++
+		temp = temp.Next
+	}
+	return i
 }
