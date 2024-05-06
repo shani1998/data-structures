@@ -1,5 +1,10 @@
 package linkedlist
 
+import (
+	"errors"
+	"fmt"
+)
+
 // LinkedList represents an actual doubly linked list
 // with its head reference.
 type LinkedList struct {
@@ -58,4 +63,76 @@ func (l *LinkedList) InsertLast(node *Node) {
 	// Make last node as previous of new node
 	node.prev = curr
 	l.len++
+}
+
+func (l *LinkedList) InsertAtIndex(index int, node *Node) error {
+	if index < 0 || index > l.len {
+		return errors.New("index out of bounds")
+	}
+
+	if index == 0 {
+		l.InsertFirst(node)
+		return nil
+	}
+
+	if index == l.len {
+		l.InsertLast(node)
+		return nil
+	}
+
+	i, curr, prev := 0, l.head, l.head
+	for i != index {
+		prev = curr
+		curr = curr.next
+		i++
+	}
+
+	node.prev = prev
+	node.next = curr
+
+	prev.next = node
+	curr.prev = node
+
+	l.len++
+
+	return nil
+}
+
+func (l *LinkedList) Len() int {
+	return l.len
+}
+
+func (l *LinkedList) TraverseForward() {
+	curr := l.head
+	if curr == nil {
+		return
+	}
+
+	output := ""
+	for curr != nil {
+		output = fmt.Sprintf("%s-->[%v]", output, curr.data)
+		curr = curr.next
+	}
+
+	fmt.Printf("%s\n", output)
+}
+
+func (l *LinkedList) TraverseBackward() {
+	curr := l.head
+	if curr == nil {
+		return
+	}
+	// go to the last node
+	for curr.next != nil {
+		curr = curr.next
+	}
+
+	output := ""
+	// traverse backward using prev pointer
+	for curr != nil {
+		output = fmt.Sprintf("%s-->[%v]", output, curr.data)
+		curr = curr.prev
+	}
+
+	fmt.Printf("%s\n", output)
 }
