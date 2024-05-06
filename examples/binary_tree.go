@@ -1,3 +1,6 @@
+//go:build examples
+// +build examples
+
 package main
 
 import "github.com/shani1998/data-structures/tree"
