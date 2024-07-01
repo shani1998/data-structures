@@ -7,3 +7,7 @@ fmt:
 
 test:
 	go test ./... -v -cover
+
+vendor: go.mod
+	go mod tidy
+	go mod vendor

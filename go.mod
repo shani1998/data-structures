@@ -1,3 +1,3 @@
 module github.com/shani1998/data-structures
 
-go 1.18
+go 1.22
