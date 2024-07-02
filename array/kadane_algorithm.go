@@ -14,7 +14,7 @@ Output: 6
 
 // Time complexity: O(n*n), Space complexity: O(1)
 func maxSubArray1(nums []int) int {
-	maxSum := math.MinInt
+	maxSum := math.MinInt64
 
 	for i := 0; i < len(nums); i++ {
 		currSum := nums[i]
