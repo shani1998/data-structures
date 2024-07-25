@@ -1,4 +1,4 @@
-package main
+package questions
 
 /*
 Given a string s, find the length of the longest substring without repeating characters.
@@ -43,14 +43,13 @@ func lengthOfLongestSubstring2(s string) int {
 			lookup[s[i]] = i
 			currMax++
 			i++
-			clear(lookup)
+			if currMax > maxLen {
+				maxLen = currMax
+			}
 			continue
-
-		}
-		if currMax > maxLen {
-			maxLen = currMax
 		}
 		currMax = 0
+		clear(lookup)
 		i = indexAt + 1
 	}
 	return maxLen

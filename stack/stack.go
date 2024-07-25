@@ -1,12 +1,19 @@
 package stack
 
-import "errors"
+import (
+	"errors"
+	"sync"
+)
 
 // Stack is a simple LIFO stack for any type.
 type Stack []any
 
+var mu sync.Mutex
+
 // Push adds an item to the top of the stack
 func (s *Stack) Push(item any) {
+	mu.Lock()
+	defer mu.Unlock()
 	*s = append(*s, item)
 }
 
@@ -19,6 +26,8 @@ func (s *Stack) Pop() (any, error) {
 		return nil, errors.New("cannot pop from empty stack")
 	}
 
+	mu.Lock()
+	defer mu.Unlock()
 	item := (*s)[length-1]
 	*s = (*s)[:length-1]
 
