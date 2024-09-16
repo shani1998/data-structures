@@ -1,4 +1,4 @@
-package questions
+package slidingwindow
 
 /*
 Given a string s, find the length of the longest substring without repeating characters.
@@ -51,6 +51,27 @@ func lengthOfLongestSubstring2(s string) int {
 		currMax = 0
 		clear(lookup)
 		i = indexAt + 1
+	}
+	return maxLen
+}
+
+// using sliding window approach, Time complexity: O(n), Space complexity: O(min(n, m)),
+func lengthOfLongestSubstring3(s string) int {
+	var left, right, maxLen int
+	lookup := make(map[byte]int)
+	lenStr := len(s)
+
+	for right < lenStr {
+		indexAt, isExist := lookup[s[right]]
+		if isExist {
+			if indexAt+1 > left { // check if the last occurrence of the character is within the current window
+				left = indexAt + 1 // move left pointer to the right of the last occurrence of the character
+			}
+		}
+		lenSubStr := right - left + 1
+		maxLen = max(maxLen, lenSubStr)
+		lookup[s[right]] = right
+		right++
 	}
 	return maxLen
 }

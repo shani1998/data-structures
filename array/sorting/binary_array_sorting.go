@@ -1,7 +1,5 @@
 package sorting
 
-import "sync"
-
 /*
 n = 5
 arr = 1 0 1 1 0
@@ -50,5 +48,4 @@ func sortColors(nums []int) {
 			i++
 		}
 	}
-	sync.Pool{}
 }

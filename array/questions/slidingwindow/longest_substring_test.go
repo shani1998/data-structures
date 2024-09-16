@@ -1,4 +1,4 @@
-package questions
+package slidingwindow
 
 import "testing"
 
