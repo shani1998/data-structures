@@ -1,7 +1,7 @@
-# This workflow will build a golang project
+# This workflow will build, lint, and test a Golang project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
 
-name: Go
+name: Go CI
 
 on:
   push:
@@ -10,19 +10,55 @@ on:
     branches: [ "main" ]
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v4
+      # Checkout the code
+      - uses: actions/checkout@v4
 
-    - name: Set up Go
-      uses: actions/setup-go@v4
-      with:
-        go-version: '1.22'
-#
-#    - name: Build
-#      run: go build -v ./...
+      # Set up Go environment
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.22'
 
-    - name: Test
-      run: go test -v ./...
+      # Cache Go modules
+      - name: Cache Go modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      # Install dependencies
+      - name: Install dependencies
+        run: go mod tidy
+
+      # Run static analysis (optional but recommended)
+      - name: Lint Go code
+        run: |
+          go install golang.org/x/lint/golint@latest
+          golint ./...
+
+      # Run tests with coverage
+      - name: Run Tests with Coverage
+        run: |
+          go test -v ./... -coverprofile=coverage.out
+          go tool cover -func=coverage.out
+
+      # Upload test coverage report (optional)
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage.out
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: true
+
+      # Build the project
+      - name: Build the project
+        run: go build -v ./...
