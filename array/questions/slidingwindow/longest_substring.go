@@ -75,3 +75,26 @@ func lengthOfLongestSubstring3(s string) int {
 	}
 	return maxLen
 }
+
+func longestSubstringRecursive(s string, start int, set map[byte]bool) int {
+	// base condition
+	if start >= len(s) {
+		return 0
+	}
+
+	maxLength := 0
+	for i := start; i < len(s); i++ {
+		if set[s[i]] {
+			break
+		}
+		set[s[i]] = true
+		maxLength = max(maxLength, i-start+1) //3
+	}
+
+	set = make(map[byte]bool)
+	return max(maxLength, longestSubstringRecursive(s, start+1, set))
+}
+
+func longestSubstring(s string) int {
+	return longestSubstringRecursive(s, 0, make(map[byte]bool))
+}

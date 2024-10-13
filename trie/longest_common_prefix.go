@@ -1,21 +1,17 @@
 package main
 
 func longestCommonPrefix(strs []string) string {
-	n := len(strs)
-	srcStr, result := strs[0], ""
-	for index, ch := range srcStr {
-		notFound := false
-		for i := 0; i < n; i++ {
-			if index >= len(strs[i]) || string(strs[i][index]) != string(ch) {
-				notFound = true
-				break
+	if len(strs) == 0 {
+		return ""
+	}
+	var firstStr, lenStrs, result = strs[0], len(strs), ""
+	for i, ch := range firstStr {
+		for j := 1; j < lenStrs; j++ {
+			if i >= len(strs[j]) || strs[j][i] != byte(ch) {
+				return result
 			}
-		}
-		if notFound {
-			break
 		}
 		result += string(ch)
 	}
 	return result
-
 }
