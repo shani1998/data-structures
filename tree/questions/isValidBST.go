@@ -1,18 +1,20 @@
-package tree
+package questions
 
-func getInorderTraversal(root *Node, result []int) []int {
+import "github.com/shani1998/data-structures/tree"
+
+func getInorderTraversal(root *tree.Node, result []int) []int {
 	if root == nil {
 		return result
 	}
 
-	result = getInorderTraversal(root.left, result)
-	result = append(result, root.val.(int))
-	result = getInorderTraversal(root.right, result)
+	result = getInorderTraversal(root.Left, result)
+	result = append(result, root.Val.(int))
+	result = getInorderTraversal(root.Right, result)
 
 	return result
 }
 
-func isValidBST(root *Node) bool {
+func isValidBST(root *tree.Node) bool {
 	// inorder traversal of BST should be sorted array
 	traversal := getInorderTraversal(root, []int{})
 

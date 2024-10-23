@@ -17,12 +17,12 @@ func LevelOrderTraversal(root *Node) {
 
 	for queue.Length() > 0 {
 		item, _ := queue.Pop()
-		fmt.Printf("%v-->", item.(*Node).val)
-		if item.(*Node).left != nil {
-			queue.Push(item.(*Node).left)
+		fmt.Printf("%v-->", item.(*Node).Val)
+		if item.(*Node).Left != nil {
+			queue.Push(item.(*Node).Left)
 		}
-		if item.(*Node).right != nil {
-			queue.Push(item.(*Node).right)
+		if item.(*Node).Right != nil {
+			queue.Push(item.(*Node).Right)
 		}
 	}
 
@@ -46,11 +46,11 @@ func GetLevelOrderTraversal(root *Node) [][]any {
 		for i := 0; i < Qsize; i++ {
 			item, _ := queue.Pop()
 			levels = append(levels, item)
-			if item.(*Node).left != nil {
-				queue.Push(item.(*Node).left)
+			if item.(*Node).Left != nil {
+				queue.Push(item.(*Node).Left)
 			}
-			if item.(*Node).right != nil {
-				queue.Push(item.(*Node).right)
+			if item.(*Node).Right != nil {
+				queue.Push(item.(*Node).Right)
 			}
 		}
 

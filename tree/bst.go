@@ -4,25 +4,25 @@ type BST struct {
 	root *Node
 }
 
-func (bst *BST) Insert(val int) {
-	bst.insertHelper(bst.root, val)
+func (bst *BST) Insert(Val int) {
+	bst.insertHelper(bst.root, Val)
 }
 
-func (bst *BST) insertHelper(node *Node, val int) *Node {
+func (bst *BST) insertHelper(node *Node, Val int) *Node {
 	if bst.root == nil {
-		bst.root = &Node{val, nil, nil}
+		bst.root = &Node{Val, nil, nil}
 		return bst.root
 	}
 	if node == nil {
-		return &Node{val, nil, nil}
+		return &Node{Val, nil, nil}
 	}
 
-	if val <= node.val.(int) {
-		node.left = bst.insertHelper(node.left, val)
+	if Val <= node.Val.(int) {
+		node.Left = bst.insertHelper(node.Left, Val)
 	}
 
-	if val > node.val.(int) {
-		node.right = bst.insertHelper(node.right, val)
+	if Val > node.Val.(int) {
+		node.Right = bst.insertHelper(node.Right, Val)
 	}
 
 	return node

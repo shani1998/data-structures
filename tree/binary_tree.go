@@ -8,9 +8,9 @@ import (
 
 // Node a single node that composes the tree
 type Node struct {
-	val   any
-	left  *Node
-	right *Node
+	Val   any
+	Left  *Node
+	Right *Node
 }
 
 // BinaryTree the binary tree of values of type any
@@ -23,9 +23,9 @@ type BinaryTree struct {
 // node with given val.
 func NewNode(val any) *Node {
 	return &Node{
-		val:   val,
-		left:  nil,
-		right: nil,
+		Val:   val,
+		Left:  nil,
+		Right: nil,
 	}
 }
 
@@ -45,17 +45,17 @@ func (bt *BinaryTree) Insert(node *Node) {
 	_ = q.Push(bt.root)
 	for q.Length() > 0 {
 		currentNode, _ := q.Pop()
-		if currentNode.(*Node).left == nil {
-			currentNode.(*Node).left = node
+		if currentNode.(*Node).Left == nil {
+			currentNode.(*Node).Left = node
 			return
 		}
-		_ = q.Push(currentNode.(*Node).left)
+		_ = q.Push(currentNode.(*Node).Left)
 
-		if currentNode.(*Node).right == nil {
-			currentNode.(*Node).right = node
+		if currentNode.(*Node).Right == nil {
+			currentNode.(*Node).Right = node
 			return
 		}
-		_ = q.Push(currentNode.(*Node).right)
+		_ = q.Push(currentNode.(*Node).Right)
 	}
 
 }

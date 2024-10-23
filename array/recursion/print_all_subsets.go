@@ -1,6 +1,7 @@
 package recursion
 
 // subsets generates all subsets of the given array.
+// time complexity: O(n*2^n) , space complexity: O(n*2^n)
 func subsets(nums []int) [][]int {
 	var res [][]int
 	var subset []int

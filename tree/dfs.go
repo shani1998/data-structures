@@ -18,15 +18,21 @@ import "github.com/shani1998/data-structures/stack"
 */
 
 func InOrderTraversalIterative(root *Node) {
-	var stack stack.Stack
-	if root == nil {
-		return
-	}
-	stack.Push(root)
+	var tmpStack = stack.Stack{}
+	curr := root
 
-	for len(stack) > 0 {
-		//curr := root.left
-		// TODO
-	}
+	for curr != nil || tmpStack.Length() > 0 {
+		// Reach the leftmost Node of the current Node
+		for curr != nil {
+			tmpStack.Push(curr)
+			curr = curr.Left
+		}
+		// Current must be nil at this point
+		node, _ := tmpStack.Pop() // Retrieve as interface{}
+		curr = node.(*Node)       // Type assert to *Node
+		println(curr.Val)         // Print the node value
 
+		// Consider the right subtree
+		curr = curr.Right
+	}
 }
