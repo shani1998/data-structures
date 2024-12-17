@@ -45,6 +45,8 @@ func GetLevelOrderTraversal(root *Node) [][]any {
 		// and add its children to the queue
 		for i := 0; i < Qsize; i++ {
 			item, _ := queue.Pop()
+			//node := queue[0]
+			//queue = queue[1:]
 			levels = append(levels, item)
 			if item.(*Node).Left != nil {
 				queue.Push(item.(*Node).Left)
