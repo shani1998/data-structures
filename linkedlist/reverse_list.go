@@ -13,8 +13,8 @@ func ReverseList(head *SinglyNode) *SinglyNode {
 	var prv *SinglyNode
 	prv, curr := nil, head
 	for curr != nil {
-		temp := curr.next
-		curr.next = prv
+		temp := curr.Next
+		curr.Next = prv
 		prv = curr
 		curr = temp
 	}
@@ -25,13 +25,13 @@ func ReverseList(head *SinglyNode) *SinglyNode {
 // i/p: 2-->3-->4-->5-->6, o/p: 6-->5-->4-->3-->2
 // time: O(n), space: O(n) <-- stack call
 func ReverseListRecursive(head *SinglyNode) *SinglyNode {
-	if head == nil || head.next == nil {
+	if head == nil || head.Next == nil {
 		return head
 	}
 
-	node := ReverseListRecursive(head.next)
-	head.next.next = head // assign current address in next.next
-	head.next = nil       // break the link of current node
+	node := ReverseListRecursive(head.Next)
+	head.Next.Next = head // assign current address in Next.Next
+	head.Next = nil       // break the link of current node
 
 	return node
 }
@@ -41,6 +41,6 @@ func TraverseReverse(head *SinglyNode) {
 	if head == nil {
 		return
 	}
-	TraverseReverse(head.next)
-	fmt.Printf("%v-->", head.data)
+	TraverseReverse(head.Next)
+	fmt.Printf("%v-->", head.Val)
 }

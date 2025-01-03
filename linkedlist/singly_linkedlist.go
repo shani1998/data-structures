@@ -13,15 +13,15 @@ type SinglyLinkedList struct {
 
 // SinglyNode represents a single node in the linked list.
 type SinglyNode struct {
-	data any
-	next *SinglyNode
+	Val  any
+	Next *SinglyNode
 }
 
-// NewSinglyNode returns a new node with given data.
-func NewSinglyNode(data interface{}) *SinglyNode {
+// NewSinglyNode returns a new node with given Val.
+func NewSinglyNode(Val interface{}) *SinglyNode {
 	return &SinglyNode{
-		data: data,
-		next: nil,
+		Val:  Val,
+		Next: nil,
 	}
 }
 
@@ -33,8 +33,8 @@ func (l *SinglyLinkedList) InsertFirst(node *SinglyNode) {
 		l.len++
 		return
 	}
-	// Make next of new node as head
-	node.next = l.head
+	// Make Next of new node as head
+	node.Next = l.head
 	// move the head to point to the new node
 	l.head = node
 	l.len++
@@ -50,10 +50,10 @@ func (l *SinglyLinkedList) InsertLast(node *SinglyNode) {
 	}
 	// find last node in the list
 	curr := l.head
-	for curr.next != nil {
-		curr = curr.next
+	for curr.Next != nil {
+		curr = curr.Next
 	}
-	curr.next = node
+	curr.Next = node
 	l.len++
 }
 
@@ -64,15 +64,15 @@ func (l *SinglyLinkedList) DeleteFirst() {
 		return
 	}
 	// if there is only one element in the list
-	if l.head.next == nil {
+	if l.head.Next == nil {
 		l.head = nil
 		l.len--
 		return
 	}
 	// delete first node
 	prev := l.head
-	l.head = l.head.next
-	prev.next = nil // break the link
+	l.head = l.head.Next
+	prev.Next = nil // break the link
 	l.len--
 }
 
@@ -84,9 +84,9 @@ func (l *SinglyLinkedList) DeleteLast() {
 	}
 	// find 2nd last element and break the link
 	curr, prv := l.head, l.head
-	for curr.next != nil {
+	for curr.Next != nil {
 		prv = curr
-		curr = curr.next
+		curr = curr.Next
 	}
 	// if there is only one element in the list
 	if prv == curr {
@@ -95,42 +95,42 @@ func (l *SinglyLinkedList) DeleteLast() {
 		return
 	}
 
-	prv.next = nil
+	prv.Next = nil
 	l.len--
 }
 
-// DeleteNode delete the first occurrence of a node with given data.
+// DeleteNode delete the first occurrence of a node with given Val.
 func (l *SinglyLinkedList) DeleteNode(key interface{}) {
 	// if there is no node in the list
 	if l.head == nil {
 		return
 	}
 	// if head itself holds the key
-	if l.head.data == key {
+	if l.head.Val == key {
 		l.DeleteFirst()
 		return
 	}
-	// find prv and next elements to the given data and break the link
+	// find prv and Next elements to the given Val and break the link
 	curr, prv := l.head, l.head
-	for curr.next != nil {
-		if curr.data == key {
+	for curr.Next != nil {
+		if curr.Val == key {
 			break
 		}
 		prv = curr
-		curr = curr.next
+		curr = curr.Next
 	}
 
-	prv.next = curr.next
-	curr.next = nil
+	prv.Next = curr.Next
+	curr.Next = nil
 	l.len--
 }
 
 // Traverse iterates over the receiver linked list.
 func (l *SinglyLinkedList) Traverse() {
 	currNode := l.head
-	for currNode.next != nil {
-		fmt.Printf("%v-->", currNode.data)
-		currNode = currNode.next
+	for currNode.Next != nil {
+		fmt.Printf("%v-->", currNode.Val)
+		currNode = currNode.Next
 	}
-	fmt.Printf("%v\nTotal Elements: %v\n", currNode.data, l.len)
+	fmt.Printf("%v\nTotal Elements: %v\n", currNode.Val, l.len)
 }

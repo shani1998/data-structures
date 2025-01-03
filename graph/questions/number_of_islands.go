@@ -1,5 +1,15 @@
 package questions
 
+/*
+Input: M[][] = {{‘1’, ‘1’, ‘0’, ‘0’, ‘0’},
+				{‘0’, ‘1’, ‘0’, ‘0’, ‘1’},
+				{‘1’, ‘0’, ‘0’, ‘1’, ‘1’},
+				{‘0’, ‘0’, ‘0’, ‘0’, ‘0’},
+				{‘1’, ‘0’, ‘1’, ‘1’, ‘0’}}
+
+Output: 4
+*/
+
 func dfs(grid [][]byte, visited [][]bool, i, j, rows, cols int) {
 	if i < 0 || j < 0 || i >= rows || j >= cols || grid[i][j] == '0' || visited[i][j] {
 		return
