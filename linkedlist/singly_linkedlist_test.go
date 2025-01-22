@@ -5,9 +5,9 @@ import (
 	"testing"
 )
 
-func constructList(data []interface{}) *SinglyNode {
+func constructList(Val []interface{}) *SinglyNode {
 	list := SinglyLinkedList{}
-	for _, num := range data {
+	for _, num := range Val {
 		list.InsertLast(NewSinglyNode(num))
 	}
 	return list.head
@@ -16,10 +16,10 @@ func constructList(data []interface{}) *SinglyNode {
 func compare(expectedNodes []interface{}, head *SinglyNode) (int, interface{}, interface{}, error) {
 	curr, count := head, 0
 	for curr != nil {
-		if curr.data != expectedNodes[count] {
-			return count, curr.data, expectedNodes[count], fmt.Errorf("")
+		if curr.Val != expectedNodes[count] {
+			return count, curr.Val, expectedNodes[count], fmt.Errorf("")
 		}
-		curr = curr.next
+		curr = curr.Next
 		count++
 	}
 	return 0, nil, nil, nil

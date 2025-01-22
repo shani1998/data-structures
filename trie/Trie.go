@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-//Node represent each character
+// Node represent each character
 type Node struct {
 	//this is a single char stored for example letter a,b,c,d,etc
 	char rune
@@ -22,7 +22,7 @@ type Trie struct {
 }
 
 // NewTrieNode this will be used to initialize a new node with 26 children
-//each child should first be initialized to nil
+// each child should first be initialized to nil
 func NewTrieNode(ch rune) *Node {
 	node := &Node{char: ch, isEndOfWords: false}
 	for i := 0; i < 26; i++ {
@@ -69,6 +69,30 @@ func (t *Trie) Display() {
 	}
 }
 
+func (t *Trie) Search(str string) bool {
+	current := t.root
+	strippedWord := strings.ToLower(strings.ReplaceAll(str, " ", ""))
+	for _, ch := range strippedWord {
+		if current.children[ch-97] == nil {
+			return false
+		}
+		current = current.children[ch-97]
+	}
+	return current.isEndOfWords
+}
+
+func (t *Trie) SearchPrefix(str string) bool {
+	current := t.root
+	strippedWord := strings.ToLower(strings.ReplaceAll(str, " ", ""))
+	for _, ch := range strippedWord {
+		if current.children[ch-97] == nil {
+			return false
+		}
+		current = current.children[ch-97]
+	}
+	return true
+}
+
 func main() {
 	trie := &Trie{root: NewTrieNode(0)}
 	trie.Insert("app")
@@ -79,4 +103,5 @@ func main() {
 	//	fmt.Printf("%+v", v)
 	//}
 	trie.Display()
+	fmt.Println(trie.Search("apple"))
 }
