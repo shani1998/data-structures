@@ -1,6 +1,7 @@
 package tree
 
 import (
+	"container/list"
 	"fmt"
 
 	"github.com/shani1998/data-structures/queue"
@@ -28,6 +29,7 @@ func LevelOrderTraversal(root *Node) {
 
 }
 
+// GetLevelOrderTraversal using channel as queue
 func GetLevelOrderTraversal(root *Node) [][]any {
 	result := make([][]any, 0)
 	if root == nil {
@@ -62,4 +64,71 @@ func GetLevelOrderTraversal(root *Node) [][]any {
 
 	return result
 
+}
+
+func levelOrder(root *Node) [][]int {
+	if root == nil {
+		return [][]int{}
+	}
+
+	result := [][]int{}
+	queue := list.New() // use container/list lib get O(1) time complexity for enqueue and dequeue operations, implemented using doubly linkedlist
+	queue.PushBack(root)
+
+	for queue.Len() > 0 {
+		levelSize := queue.Len()
+		levelVals := []int{}
+
+		for i := 0; i < levelSize; i++ {
+			elem := queue.Front() // get the first element
+			node := elem.Value.(*Node)
+			queue.Remove(elem)
+
+			levelVals = append(levelVals, node.Val.(int))
+
+			if node.Left != nil {
+				queue.PushBack(node.Left)
+			}
+			if node.Right != nil {
+				queue.PushBack(node.Right)
+			}
+		}
+
+		result = append(result, levelVals)
+	}
+
+	return result
+}
+
+func levelOrderUsingArray(root *Node) [][]int {
+	if root == nil {
+		return [][]int{}
+	}
+
+	result := [][]int{}
+	queue := []*Node{root}
+	front := 0 // Pointer to avoid slice shifting
+
+	for front < len(queue) {
+		levelSize := len(queue) - front
+		levelVals := []int{}
+
+		for i := 0; i < levelSize; i++ {
+			node := queue[front]
+			front++ // Move the front pointer instead of shifting elements
+
+			levelVals = append(levelVals, node.Val.(int))
+
+			if node.Left != nil {
+				queue = append(queue, node.Left)
+			}
+			if node.Right != nil {
+				queue = append(queue, node.Right)
+			}
+		}
+
+		result = append(result, levelVals)
+	}
+
+	return result
 }

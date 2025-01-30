@@ -5,6 +5,10 @@ import (
 	"github.com/shani1998/data-structures/tree"
 )
 
+/*
+https://leetcode.com/problems/invert-binary-tree/description/
+*/
+
 func invertTree(root *tree.Node) *tree.Node {
 	if root == nil {
 		return nil

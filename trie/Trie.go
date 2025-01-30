@@ -69,6 +69,7 @@ func (t *Trie) Display() {
 	}
 }
 
+// Search searches for a word in the trie, time
 func (t *Trie) Search(str string) bool {
 	current := t.root
 	strippedWord := strings.ToLower(strings.ReplaceAll(str, " ", ""))
@@ -86,6 +87,7 @@ func (t *Trie) SearchPrefix(str string) bool {
 	strippedWord := strings.ToLower(strings.ReplaceAll(str, " ", ""))
 	for _, ch := range strippedWord {
 		if current.children[ch-97] == nil {
+
 			return false
 		}
 		current = current.children[ch-97]
