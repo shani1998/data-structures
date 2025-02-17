@@ -2,6 +2,7 @@ package questions
 
 import (
 	"fmt"
+
 	"github.com/shani1998/data-structures/tree"
 )
 
@@ -36,6 +37,37 @@ func binaryTreePathsUtils(root *tree.Node, result []string, path string) []strin
 	path += fmt.Sprintf("%d", root.Val) + "->"
 	result = binaryTreePathsUtils(root.Left, result, path)
 	result = binaryTreePathsUtils(root.Right, result, path)
+
+	return result
+}
+
+// Given the root of a binary tree and an integer targetSum, return all root-to-leaf paths where the sum of the node values in the path equals targetSum.
+// Time complexity O(n), space complexity O(n*m)
+func pathSum(root *tree.Node, targetSum int) [][]int {
+	var dfs func(*tree.Node, []int, int, int) [][]int
+	var result [][]int
+
+	dfs = func(root *tree.Node, currPath []int, currPathSum, targetSum int) [][]int {
+		if root == nil {
+			return result
+		}
+
+		currPath = append(currPath, root.Val.(int))
+		currPathSum += root.Val.(int)
+
+		if root.Left == nil && root.Right == nil && currPathSum == targetSum {
+			tmpArr := make([]int, len(currPath))
+			copy(tmpArr, currPath)
+			result = append(result, tmpArr)
+			return result
+		}
+
+		result = dfs(root.Left, currPath, currPathSum, targetSum)
+		result = dfs(root.Right, currPath, currPathSum, targetSum)
+		return result
+	}
+
+	dfs(root, []int{}, 0, targetSum)
 
 	return result
 }

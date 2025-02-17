@@ -2,6 +2,7 @@ package questions
 
 import (
 	"fmt"
+
 	"github.com/shani1998/data-structures/tree"
 )
 
@@ -65,5 +66,25 @@ func invertTree1(root *tree.Node) *tree.Node {
 		}
 	}
 
+	return root
+}
+
+// Time complexity: O(n),
+// Best Space complexity: O(log(n)) for complete binary tree call stack would be logn,
+// Avg Space complexity: Omega(h), where h is the height of the tree
+// Worst Space complexity: O(n) for skewed binary tree
+func invertTree2(root *tree.Node) *tree.Node {
+	var preOrder func(*tree.Node)
+	preOrder = func(root *tree.Node) {
+		if root == nil {
+			return
+		}
+
+		root.Left, root.Right = root.Right, root.Left
+		preOrder(root.Left)
+		preOrder(root.Right)
+	}
+
+	preOrder(root)
 	return root
 }
