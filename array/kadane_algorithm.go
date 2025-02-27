@@ -62,3 +62,53 @@ func maxSubArrayIndices(nums []int) (maxLeft int, maxRight int) {
 
 	return maxLeft, maxRight
 }
+
+// maximum-absolute-sum-of-any-subarray Ex: nums = [2,-5,1,-4,3,-2] -> 8
+// time complexity: O(2n), space complexity: O(1)
+func maxAbsoluteSum1(nums []int) int {
+	maxSum, minSum, currSum := 0, 0, 0
+
+	// maximum positive sum
+	for _, num := range nums {
+		currSum += num
+		maxSum = max(maxSum, currSum)
+		if currSum < 0 {
+			currSum = 0
+		}
+	}
+
+	// maximum negative sum
+	currSum = 0
+	for _, num := range nums {
+		currSum += num
+		minSum = min(minSum, currSum)
+		if currSum > 0 {
+			currSum = 0
+		}
+	}
+
+	return max(maxSum, -minSum)
+}
+
+// Time complexity: O(n), Space complexity: O(1)
+func maxAbsoluteSum2(nums []int) int {
+	maxSum, minSum := 0, 0
+	currMax, currMin := 0, 0
+
+	for _, num := range nums {
+		currMax += num
+		currMin += num
+
+		maxSum = max(maxSum, currMax)
+		minSum = min(minSum, currMin)
+
+		if currMax < 0 {
+			currMax = 0
+		}
+		if currMin > 0 {
+			currMin = 0
+		}
+	}
+
+	return max(maxSum, -minSum)
+}

@@ -25,6 +25,26 @@ func subsets(nums []int) [][]int {
 	return res
 }
 
+// time to generate all subsets would be O(2^n) but copy operation will take O(n) time so total time complexity would be O(n*2^n)
+func generateAllSubsets(start int, nums, subset []int, subsets [][]int) [][]int {
+	if start == len(nums) {
+		tmpArr := make([]int, len(subset))
+		copy(tmpArr, subset)
+		subsets = append(subsets, tmpArr)
+		return subsets
+	}
+
+	// include the current element
+	subset = append(subset, nums[start])
+	subsets = generateAllSubsets(start+1, nums, subset, subsets)
+
+	// exclude the current element
+	subset = subset[:len(subset)-1]
+	subsets = generateAllSubsets(start+1, nums, subset, subsets)
+
+	return subsets
+}
+
 /*
                 []
                /   \
