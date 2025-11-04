@@ -98,3 +98,57 @@ func longestSubstringRecursive(s string, start int, set map[byte]bool) int {
 func longestSubstring(s string) int {
 	return longestSubstringRecursive(s, 0, make(map[byte]bool))
 }
+
+func longestSubStrWithoutRepeatingCh(s string) int {
+	n := len(s)
+	if n <= 1 {
+		return n
+	}
+
+	left, maxLen := 0, 0
+	windowCh := make(map[byte]bool)
+
+	for right := 0; right < n; right++ {
+		// If char already in window, shrink from left
+		for windowCh[s[right]] {
+			delete(windowCh, s[left])
+			left++
+		}
+
+		// Add current char and update maxLen
+		windowCh[s[right]] = true
+		maxLen = max(maxLen, right-left+1)
+	}
+
+	return maxLen
+}
+
+/*
+Given a string s and an integer k, find the length of the longest substring that contains at most k distinct characters.
+Input:  s = "eceba", k = 2 .. aa , 1 .. abababab, 2
+Output: 3
+Explanation: The substring is "ece" with length 3.
+*/
+// time O(n) as each ch processed twice by left/right ch, space O(k) for map
+func longestSubStrLenLtK(s string, k int) int {
+	left, maxLen := 0, 0
+	windowCh := make(map[byte]int)
+
+	for right := 0; right < len(s); right++ {
+		windowCh[s[right]]++
+
+		// shrink window if distinct count > k
+		for len(windowCh) > k {
+			windowCh[s[left]]--
+			if windowCh[s[left]] == 0 {
+				delete(windowCh, s[left])
+			}
+			left++
+		}
+
+		// update max length when valid
+		maxLen = max(maxLen, right-left+1)
+	}
+
+	return maxLen
+}

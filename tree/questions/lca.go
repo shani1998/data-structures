@@ -11,6 +11,7 @@ func lowestCommonAncestor(root, p, q *tree.Node) *tree.Node {
 	for i := 0; i < minLen; i++ {
 		if pathNodeP[i] == pathNodeQ[i] {
 			lcaNode = pathNodeP[i]
+			break
 		}
 	}
 
@@ -40,4 +41,25 @@ func getPath(root, targetNode *tree.Node) []*tree.Node {
 	isPathFound := false
 	dfs(root, targetNode, []*tree.Node{}, &isPathFound)
 	return result
+}
+
+func lowestCommonAncestor2(root, p, q *tree.Node) *tree.Node {
+	// Base: empty tree or we've found p or q
+	if root == nil || root == p || root == q {
+		return root
+	}
+
+	left := lowestCommonAncestor(root.Left, p, q)
+	right := lowestCommonAncestor(root.Right, p, q)
+
+	// If both sides are non-nil, p and q are in different subtrees -> root is LCA
+	if left != nil && right != nil {
+		return root
+	}
+
+	// Otherwise return the non-nil side (or nil if both nil)
+	if left != nil {
+		return left
+	}
+	return right
 }
