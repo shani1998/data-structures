@@ -1,31 +1,87 @@
-# data-structures
-data structures implemented in go
+# Go DSA Interview Prep Toolkit
 
-Where have you seen 𝗗𝗮𝘁𝗮 𝗦𝘁𝗿𝘂𝗰𝘁𝘂𝗿𝗲𝘀 in 𝗿𝗲𝗮𝗹 𝘁𝗶𝗺𝗲 𝗔𝗽𝗽𝗹𝗶𝗰𝗮𝘁𝗶𝗼𝗻𝘀 ?
+A curated collection of data structures, algorithms, and problem solutions implemented in Go to help you prepare confidently for coding interviews.
 
-𝐒𝐭𝐚𝐜𝐤:
-1) UNDO option
-2) Text editor: you push letter by letter to the stack so you erase back.
-3) Recursion(inbuilt stack)
+## Why This Repo
 
-𝐐𝐮𝐞𝐮𝐞:
-1) Your browser deletes the history past one month.
-2) If you delete a picture on your phone, it will be the "recently delete" folder which says "the images will be deleted permanently after one week".
-   Here all the images are stored in the queue so it's easier to pop from the rear based on the image deletion date.
-3) Waiting list: during online registrations, sometimes you'll be put on the waiting list. basically, all the requests will be stored in the queue.
+- Practical, bite-sized implementations with clear naming and idiomatic Go code.
+- Topic-driven layout (arrays, graphs, dynamic programming, heaps, etc.) that mirrors common interview patterns.
+- Reference tests and examples so you can validate your understanding as you go.
+- Ready-to-run Go modules and a Makefile for streamlined practice sessions.
 
-𝐋𝐢𝐧𝐤𝐞𝐝 𝐥𝐢𝐬𝐭:
-1) Browser's Next and Previous Button: a linked list of URLs
-2) music player where you can play the next or previous song. (Doubly linked list).
-3) In the ludo game, It has to pass the chance to each player in a circular fashion (circular linked list).
+## Getting Started
 
-𝐓𝐫𝐞𝐞𝐬:
-1) File system: Folders and subfolders (N-ary tree).
-2) e-commerce websites : category -> subcategories -> products
-3) Auto-suggestion when you google (Trie)
+### Requirements
 
-𝐆𝐫𝐚𝐩𝐡𝐬:
-1) Uber, Ola cab booking: show nearest available cars (BFS)
-2) Maven dependencies build order ( Topological sorting (DFS))
-3) While booking bus/flights, you get a list of available routes.
-4) In Facebook, users are considered to be the vertices and if they are friends then there is an edge running between them. Facebook’s Friend suggestion algorithm uses graph theory. Facebook is an example of an undirected graph.
+- Go 1.20 or newer
+- Make (optional, for convenience targets)
+
+### Clone and Explore
+
+```bash
+git clone https://github.com/shani1998/data-structures.git
+cd data-structures
+```
+
+### Run Everything
+
+```bash
+go test ./...
+# or
+make test
+```
+
+### Format the Code
+
+```bash
+make fmt
+```
+
+## Directory Overview
+
+| Folder | What you will find |
+| --- | --- |
+| `array/` | Sliding window, backtracking, dynamic programming, and classic array questions. |
+| `graph/` | Traversal templates (BFS/DFS), adjacency representations, and graph interview problems. |
+| `hashing/` | Hash map patterns, frequency counting, and common interview puzzles. |
+| `heap/` | Priority queue implementation and a max-heap backed by arrays. |
+| `linkedlist/` | Singly and doubly linked list utilities, plus test-backed problems. |
+| `queue/`, `stack/` | Core abstract data type implementations with unit tests. |
+| `tree/`, `trie/` | Binary tree traversals, BST helpers, segment tree snippets, and trie utilities. |
+| `examples/` | Small reference programs demonstrating how to wire the data structures together. |
+
+Use the directory names as search anchors during practice sessions. Each subfolder mirrors a pattern you are likely to meet in interviews.
+
+## Suggested Study Path
+
+1. Warm up with the foundational ADTs (`stack/`, `queue/`, `linkedlist/`).
+2. Practice traversal templates in `tree/` and `graph/` - they unlock many medium problems.
+3. Dive into `array/` and `dp/` folders to cover sliding window, prefix sums, and dynamic programming staples.
+4. Challenge yourself with the `questions/` subfolders that mimic real interview prompts.
+5. Revisit topics weekly; run the tests to confirm muscle memory.
+
+## Real-World Applications
+
+| Concept | Everyday example |
+| --- | --- |
+| Stack | Undo operations, browser history backtracking, recursion call stacks. |
+| Queue | Background job scheduling, recently deleted photos, waitlists. |
+| Linked List | Browser navigation, playlist sequencing, circular turn order in board games. |
+| Tree | File systems, e-commerce category hierarchies, autocomplete tries. |
+| Graph | Ride sharing route matching, dependency resolution, social network friend suggestions. |
+
+## How to Contribute
+
+- Fork the repository and create a feature branch.
+- Add clear problem statements or comments when introducing new solutions.
+- Include unit tests (`go test ./...`) when you add or refactor code.
+- Run `make fmt` before opening a pull request to keep the style consistent.
+- Share learnings by updating this README or adding notes in `resources.md` files where relevant.
+
+## Additional Resources
+
+- `graph/resources.md` - curated articles on graph theory fundamentals.
+- `array/dp/README.md` and `array/slidingwindow/README.md` - topic-focused notes.
+- `examples/README.md` - walkthroughs for combining multiple data structures.
+
+If this toolkit helps you ace an interview, consider opening an issue with your story or adding the problem you solved. Happy studying!
