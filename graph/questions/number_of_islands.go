@@ -10,17 +10,6 @@ Input: M[][] = {{‘1’, ‘1’, ‘0’, ‘0’, ‘0’},
 Output: 4
 */
 
-func dfs(grid [][]byte, visited [][]bool, i, j, rows, cols int) {
-	if i < 0 || j < 0 || i >= rows || j >= cols || grid[i][j] == '0' || visited[i][j] {
-		return
-	}
-	visited[i][j] = true
-	dfs(grid, visited, i+1, j, rows, cols)
-	dfs(grid, visited, i, j+1, rows, cols)
-	dfs(grid, visited, i-1, j, rows, cols)
-	dfs(grid, visited, i, j-1, rows, cols)
-}
-
 func bfs(grid [][]byte, visited [][]bool, i, j, rows, cols int) {
 	directions := [][]int{{0, 1}, {1, 0}, {0, -1}, {-1, 0}}
 	queue := [][]int{{i, j}}
@@ -40,27 +29,49 @@ func bfs(grid [][]byte, visited [][]bool, i, j, rows, cols int) {
 	}
 }
 
+func dfs(grid [][]byte, visited [][]bool, i, j, rows, cols int) {
+    // boundary checks
+    if i < 0 || i >= rows || j < 0 || j >= cols {
+        return
+    }
+
+    // if already visited or water
+    if visited[i][j] || grid[i][j] == '0' {
+        return
+    }
+
+    visited[i][j] = true
+
+    // explore neighbors (4 directions)
+    dfs(grid, visited, i+1, j, rows, cols)
+    dfs(grid, visited, i-1, j, rows, cols)
+    dfs(grid, visited, i, j+1, rows, cols)
+    dfs(grid, visited, i, j-1, rows, cols)
+}
+
 func numIslands(grid [][]byte) int {
-	rows := len(grid)
-	if rows == 0 {
-		return 0
-	}
-	cols := len(grid[0])
+    if len(grid) == 0 {
+        return 0
+    }
 
-	// Initialize visited array
-	visited := make([][]bool, rows)
-	for i := range visited {
-		visited[i] = make([]bool, cols)
-	}
+    rows := len(grid)
+    cols := len(grid[0])
 
-	var noOfIslands int
-	for i := 0; i < rows; i++ {
-		for j := 0; j < cols; j++ {
-			if !visited[i][j] && grid[i][j] == '1' {
-				dfs(grid, visited, i, j, rows, cols)
-				noOfIslands++
-			}
-		}
-	}
-	return noOfIslands
+    visited := make([][]bool, rows)
+    for i := 0; i < rows; i++ {
+        visited[i] = make([]bool, cols)
+    }
+
+    count := 0
+
+    for i := 0; i < rows; i++ {
+        for j := 0; j < cols; j++ {
+            if grid[i][j] == '1' && !visited[i][j] {
+                dfs(grid, visited, i, j, rows, cols)
+                count++
+            }
+        }
+    }
+
+    return count
 }
