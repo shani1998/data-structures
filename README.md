@@ -52,6 +52,18 @@ make fmt
 
 Use the directory names as search anchors during practice sessions. Each subfolder mirrors a pattern you are likely to meet in interviews.
 
+## Documentation Map
+
+- `array/` - [Array & Sequence Patterns](array/README.md)
+- `graph/` - [Graph Algorithms Playbook](graph/README.md)
+- `hashing/` - [Hashing & Frequency Patterns](hashing/README.md)
+- `heap/` - [Heaps & Priority Queues](heap/README.md)
+- `linkedlist/` - [Linked List Systems](linkedlist/README.md)
+- `queue/` - [Queue Patterns & Scheduling](queue/README.md)
+- `stack/` - [Stack Techniques & Recursion Tools](stack/README.md)
+- `tree/` - [Tree Structures & Traversals](tree/README.md)
+- `trie/` - [Prefix Tree Overview](trie/readme.md)
+
 ## Suggested Study Path
 
 1. Warm up with the foundational ADTs (`stack/`, `queue/`, `linkedlist/`).
