@@ -1,109 +1,105 @@
-package main
+package trie
 
-import (
-	"fmt"
-	"strings"
-)
-
-// Node represent each character
-type Node struct {
-	//this is a single char stored for example letter a,b,c,d,etc
-	char rune
-	//store all children  of a node that is from a-z
-	children [26]*Node
-	// indicates that the node is leaf node
-	isEndOfWords bool
+type node struct {
+	children map[rune]*node
+	isEnd    bool
 }
 
-// Trie  is our actual tree that will hold all of our nodes
-// the Root node will be nil
+// Trie represents a prefix tree for runes.
 type Trie struct {
-	root *Node
+	root *node
+	size int
 }
 
-// NewTrieNode this will be used to initialize a new node with 26 children
-// each child should first be initialized to nil
-func NewTrieNode(ch rune) *Node {
-	node := &Node{char: ch, isEndOfWords: false}
-	for i := 0; i < 26; i++ {
-		node.children[i] = nil
+func newNode() *node {
+	return &node{children: make(map[rune]*node)}
+}
+
+// NewTrie constructs an empty Trie.
+func NewTrie() *Trie {
+	return &Trie{root: newNode()}
+}
+
+// Insert adds the provided word to the trie.
+func (t *Trie) Insert(word string) {
+	if t == nil {
+		return
 	}
-	return node
-}
 
-// Insert inserts a word to the trie
-func (t *Trie) Insert(str string) {
-	//this will keep track of our current node
-	//when transversing our tree  it should always
-	// start at the top of our tree, i.e our root
 	current := t.root
-
-	///remove all spaces from the word
-	///and convert it to lowercase
-	strippedWord := strings.ToLower(strings.ReplaceAll(str, " ", ""))
-
-	for _, ch := range strippedWord {
-		// check if current already has a node created at our current node
-		// if not create the node
-		if current.children[ch-97] == nil {
-			current.children[ch-97] = NewTrieNode(ch)
+	for _, ch := range word {
+		next, exists := current.children[ch]
+		if !exists {
+			next = newNode()
+			current.children[ch] = next
 		}
-		current = current.children[ch-97]
+		current = next
 	}
-	current.isEndOfWords = true
-}
 
-func (t *Trie) Display() {
-	queue := make([]*Node, 0)
-	queue = append(queue, t.root)
-
-	for len(queue) > 0 {
-		current := queue[0]
-		queue = queue[1:]
-		for i, child := range current.children {
-			if current.children[i] != nil {
-				queue = append(queue, child)
-				fmt.Printf("%s, isEndOfWords %v,queue %v\n", string(child.char), child.isEndOfWords, queue)
-			}
-		}
+	if !current.isEnd {
+		current.isEnd = true
+		t.size++
 	}
 }
 
-// Search searches for a word in the trie, time
-func (t *Trie) Search(str string) bool {
+// Contains reports whether the exact word exists in the trie.
+func (t *Trie) Contains(word string) bool {
+	if t == nil {
+		return false
+	}
+
 	current := t.root
-	strippedWord := strings.ToLower(strings.ReplaceAll(str, " ", ""))
-	for _, ch := range strippedWord {
-		if current.children[ch-97] == nil {
+	for _, ch := range word {
+		next, exists := current.children[ch]
+		if !exists {
 			return false
 		}
-		current = current.children[ch-97]
+		current = next
 	}
-	return current.isEndOfWords
+	return current.isEnd
 }
 
-func (t *Trie) SearchPrefix(str string) bool {
-	current := t.root
-	strippedWord := strings.ToLower(strings.ReplaceAll(str, " ", ""))
-	for _, ch := range strippedWord {
-		if current.children[ch-97] == nil {
+// HasPrefix reports whether any word in the trie starts with the prefix.
+func (t *Trie) HasPrefix(prefix string) bool {
+	if t == nil {
+		return false
+	}
 
+	current := t.root
+	for _, ch := range prefix {
+		next, exists := current.children[ch]
+		if !exists {
 			return false
 		}
-		current = current.children[ch-97]
+		current = next
 	}
 	return true
 }
 
-func main() {
-	trie := &Trie{root: NewTrieNode(0)}
-	trie.Insert("app")
-	trie.Insert("apple")
-	trie.Insert("star")
-	//fmt.Printf("%+v", trie.root.children)
-	//for v := range trie.root.children {
-	//	fmt.Printf("%+v", v)
-	//}
-	trie.Display()
-	fmt.Println(trie.Search("apple"))
+// Size returns the number of distinct words stored in the trie.
+func (t *Trie) Size() int {
+	if t == nil {
+		return 0
+	}
+	return t.size
+}
+
+// LongestCommonPrefix walks the trie while every node has a single child.
+func (t *Trie) LongestCommonPrefix() string {
+	if t == nil || t.size == 0 {
+		return ""
+	}
+
+	current := t.root
+	prefix := make([]rune, 0)
+
+	for len(current.children) == 1 && !current.isEnd {
+		for ch, next := range current.children {
+			prefix = append(prefix, ch)
+			current = next
+			break
+		}
+	}
+
+	return string(prefix)
 }

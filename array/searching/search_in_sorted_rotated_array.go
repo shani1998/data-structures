@@ -59,6 +59,7 @@ func search(nums []int, target int) int {
 }
 
 //----------------------------approach-2-----------------------------only O(logn)
+// if there is no duplicate element in the array
 func search2(nums []int, target int) int {
 	var low, high = 0, len(nums) - 1
 	for low <= high {
@@ -84,4 +85,91 @@ func search2(nums []int, target int) int {
 	}
 	return -1
 
+}
+//----------------------------approach-2-----------------------------only O(logn)
+// this works even if there are duplicate elements in the array
+func searc3(nums []int, target int) bool {
+    low, high := 0, len(nums)-1
+
+    for low <= high {
+        mid := low + (high-low)/2
+
+        if nums[mid] == target {
+            return true
+        }
+
+        // If duplicates block the logic
+        if nums[low] == nums[mid] && nums[mid] == nums[high] {
+            low++
+            high--
+            continue
+        }
+
+        // If left part is sorted
+        if nums[low] <= nums[mid] {
+            if nums[low] <= target && target < nums[mid] {
+                high = mid - 1
+            } else {
+                low = mid + 1
+            }
+        } else {
+            // Right part is sorted
+            if nums[mid] < target && target <= nums[high] {
+                low = mid + 1
+            } else {
+                high = mid - 1
+            }
+        }
+    }
+    return false
+}
+
+
+//----------------------------approach-3-----------------------------
+// this works even if there are duplicate elements in the array
+func getPivotPoint(nums []int) int {
+    n := len(nums)
+    for i := 0; i < n-1; i++ {
+        // True rotation pivot: the point where array drops
+        if nums[i] > nums[i+1] {
+            return i
+        }
+    }
+    return -1 // array is NOT rotated
+}
+
+func binSearch(nums []int, target int) bool {
+    low, high := 0, len(nums)-1
+
+    for low <= high {
+        mid := low + (high-low)/2
+
+        if nums[mid] == target {
+            return true
+        }
+        if nums[mid] > target {
+            high = mid - 1
+        } else {
+            low = mid + 1
+        }
+    }
+    return false
+}
+
+// time complexity: O(n) + O(log n)  →  O(n), space complexity: O(1)
+func search1(nums []int, target int) bool {
+    pivot := getPivotPoint(nums) // time complexity: O(n)
+
+    // If no rotation → just binary search whole array
+    if pivot == -1 {
+        return binSearch(nums, target)
+    }
+
+    // Search left sorted part: nums[0 .. pivot]
+    if target >= nums[0] && target <= nums[pivot] {
+        return binSearch(nums[:pivot+1], target)
+    }
+
+    // Search right sorted part: nums[pivot+1 .. end]
+    return binSearch(nums[pivot+1:], target)
 }

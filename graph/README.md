@@ -35,3 +35,7 @@ Graph questions explore traversal, shortest paths, and connectivity. This folder
 - Study Union-Find (Disjoint Set Union) for dynamic connectivity and Kruskal's MST.
 - Explore bidirectional search and A* for heuristic-driven traversals.
 - Model real interview prompts from LeetCode hard/Graph category and compare approaches.
+
+
+- https://leetcode.com/discuss/study-guide/1326900/graph-algorithms-problems-to-practice
+

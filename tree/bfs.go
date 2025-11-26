@@ -115,7 +115,7 @@ func levelOrderUsingArray(root *Node) [][]int {
 
 		for i := 0; i < levelSize; i++ {
 			node := queue[front]
-			front++ // Move the front pointer instead of shifting elements
+			front++ // Move the front pointer instead of shifting elements, resclicing the slice cost O(n)
 
 			levelVals = append(levelVals, node.Val.(int))
 
