@@ -105,3 +105,56 @@ func main() {
 	set.Insert(1)
 	fmt.Println("After inserting 9,1:", set.Iterate()) // [9 1]
 }
+
+// Implment all set functionality using dense-sparse technique in O(1) time complexity for insert, remove, and lookup, clear operations.
+// where x is in the range [0, N)
+type Set struct {
+	dense  []int
+	sparse []int
+	size   int
+}
+
+func NewSet(N int) *Set {
+	return &Set{
+		dense:  make([]int, N),
+		sparse: make([]int, N),
+	}
+}
+
+func (s *Set) Insert(x int) {
+	if s.lookup(x) {
+		return
+	}
+	s.dense[s.size] = x
+	s.sparse[x] = s.size
+	s.size++
+}
+
+func (s *Set) Remove(x int) {
+	if !s.lookup(x) {
+		return
+	}
+	last := s.dense[s.size-1]
+	idx := s.sparse[x]
+
+	s.dense[idx] = last
+	s.sparse[last] = idx
+
+	s.size--
+}
+
+func (s *Set) lookup(x int) bool {
+	idx := s.sparse[x]
+	if idx >= s.size {
+		return false
+	}
+	return s.dense[idx] == x
+}
+
+func (s *Set) Clear() {
+	s.size = 0
+}
+
+func (s *Set) Iterate() []int {
+	return s.dense[:s.size]
+}
