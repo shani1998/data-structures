@@ -30,9 +30,31 @@ func inOrder(root *tree.Node, result *[]tree.Node) {
     inOrder(root.Right, result)
 }
 
+// time complexity: O(n), space complexity: O(n)
 func kthSmallest(root *tree.Node, k int) int {
     inOrderNodes := []tree.Node{}   // Allocate slice
     inOrder(root, &inOrderNodes)   // Pass pointer to slice
 
     return inOrderNodes[k-1].Val.(int)   // Correct indexing
+}
+
+// time complexity: O(h + k), space complexity: O(h), where h is the height of the tree
+func kthSmallestOptimized(root *tree.Node, k int) int {
+	stack := []*tree.Node{}
+	current := root
+	count := 0
+	for current != nil || len(stack) > 0 {
+		for current != nil {
+			stack = append(stack, current)
+			current = current.Left
+		}
+		current = stack[len(stack)-1]
+		stack = stack[:len(stack)-1]
+		count++
+		if count == k {
+			return current.Val.(int)
+		}
+		current = current.Right
+	}
+	return -1 // This line should never be reached if k is valid
 }

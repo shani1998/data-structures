@@ -95,5 +95,6 @@ Use the directory names as search anchors during practice sessions. Each subfold
 - `graph/resources.md` - curated articles on graph theory fundamentals.
 - `array/dp/README.md` and `array/slidingwindow/README.md` - topic-focused notes.
 - `examples/README.md` - walkthroughs for combining multiple data structures.
+- `extras/golang-dsa/README.md` - notes on the migrated legacy practice set.
 
 If this toolkit helps you ace an interview, consider opening an issue with your story or adding the problem you solved. Happy studying!

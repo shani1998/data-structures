@@ -6,11 +6,14 @@ func lowestCommonAncestor(root, p, q *tree.Node) *tree.Node {
 	pathNodeP := getPath(root, p) // [3,5]
 	pathNodeQ := getPath(root, q) // [3,5,2,4]
 
-	minLen := min(len(pathNodeP), len(pathNodeQ))
+	// Find the last common node
 	var lcaNode *tree.Node
-	for i := 0; i < minLen; i++ {
+	minLength := min(len(pathNodeP), len(pathNodeQ))
+
+	for i := 0; i < minLength; i++ {
 		if pathNodeP[i] == pathNodeQ[i] {
 			lcaNode = pathNodeP[i]
+		} else {
 			break
 		}
 	}
@@ -19,28 +22,34 @@ func lowestCommonAncestor(root, p, q *tree.Node) *tree.Node {
 }
 
 // return path from root to target node
-func getPath(root, targetNode *tree.Node) []*tree.Node {
-	var dfs func(*tree.Node, *tree.Node, []*tree.Node, *bool)
-	var result []*tree.Node
+func getPath(root, target *tree.Node) []*tree.Node {
+	var path []*tree.Node
+	dfs(root, target, &path)
+	return path
+}
 
-	dfs = func(root, targetNode *tree.Node, currPath []*tree.Node, isPathFound *bool) {
-		if root == nil || *isPathFound {
-			return
-		}
-		currPath = append(currPath, root)
-		if root == targetNode {
-			result = append([]*tree.Node{}, currPath...) // Make a copy of the path
-			*isPathFound = true
-			return
-		}
-
-		dfs(root.Left, targetNode, currPath, isPathFound)
-		dfs(root.Right, targetNode, currPath, isPathFound)
+func dfs(root, target *tree.Node, path *[]*tree.Node) bool {
+	if root == nil {
+		return false
 	}
 
-	isPathFound := false
-	dfs(root, targetNode, []*tree.Node{}, &isPathFound)
-	return result
+	// Add this node to path
+	*path = append(*path, root)
+
+	// Target found
+	if root == target {
+		return true
+	}
+
+	// Search left or right
+	if dfs(root.Left, target, path) || dfs(root.Right, target, path) {
+		return true
+	}
+
+    // Backtrack — remove last entry as target not found in this path
+	*path = (*path)[:len(*path)-1]
+
+	return false
 }
 
 func lowestCommonAncestor2(root, p, q *tree.Node) *tree.Node {
